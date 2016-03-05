@@ -246,6 +246,11 @@
             Base class of BehaviourEditor, ScriptableEditor and ExternalEditor.
             </summary>
         </member>
+        <member name="P:AdvancedInspector.InspectorEditor.Current">
+            <summary>
+            The currently refreshing InspectorEditor
+            </summary>
+        </member>
         <member name="M:AdvancedInspector.InspectorEditor.HasPreviewGUI">
             <summary>
             Preview is handled internally and is turned on and off using IPreview interface.
@@ -266,7 +271,7 @@
             We use our own targets list because we can draw object not deriving from UnityEngine.Object.
             </summary>
         </member>
-        <member name="F:AdvancedInspector.InspectorEditor.parent">
+        <member name="P:AdvancedInspector.InspectorEditor.Parent">
             <summary>
             In case of value type, we need to know the parent.
             </summary>
@@ -336,6 +341,11 @@
         <member name="M:AdvancedInspector.InspectorEditor.OnPreviewSettings">
             <summary>
             Preview Settings
+            </summary>
+        </member>
+        <member name="M:AdvancedInspector.InspectorEditor.Refresh">
+            <summary>
+            Forces the inspector to rebuild its structure.
             </summary>
         </member>
         <member name="M:AdvancedInspector.InspectorEditor.DataChanged">
@@ -600,14 +610,14 @@
             Is this field open and displaying internal fields?
             </summary>
         </member>
+        <member name="P:AdvancedInspector.InspectorField.AlwaysExpanded">
+            <summary>
+            This field cannot be collapsed.
+            </summary>
+        </member>
         <member name="P:AdvancedInspector.InspectorField.Erased">
             <summary>
             Was this field erased?
-            </summary>
-        </member>
-        <member name="P:AdvancedInspector.InspectorField.DisplayAsParent">
-            <summary>
-            Is this object display as being part of the parent?
             </summary>
         </member>
         <member name="P:AdvancedInspector.InspectorField.CreateDerived">

@@ -29,7 +29,7 @@ public class AIExample13_Expandable : MonoBehaviour
     // It is possible to prevent that like this;
     // This is useful when you build your own base type similar to how a float is displayed.
     // A good example is the Guid class.
-    [AdvancedInspector(Expandable = false), Serializable]
+    [Serializable, Expandable(false)]
     public class NotExpandableClass
     {
         [Inspect]

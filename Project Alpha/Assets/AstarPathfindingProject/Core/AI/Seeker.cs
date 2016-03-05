@@ -8,6 +8,7 @@ using Pathfinding;
  * It also handles post-processing of paths using modifiers.
  * \see \ref calling-pathfinding
  */
+[AdvancedInspector.AdvancedInspector]
 [AddComponentMenu("Pathfinding/Seeker")]
 [HelpURL("http://arongranberg.com/astar/docs/class_seeker.php")]
 public class Seeker : MonoBehaviour, ISerializationCallbackReceiver {

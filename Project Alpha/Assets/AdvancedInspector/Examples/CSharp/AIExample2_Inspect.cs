@@ -3,7 +3,7 @@
 using AdvancedInspector;
 
 [AdvancedInspector]
-public class AIExample2_Inspect : MonoBehaviour 
+public class AIExample2_Inspect : MonoBehaviour
 {
     // The Inspector attribute is used to display something by the Advanced Inspector.
     // By default, everything is hidden.
@@ -25,4 +25,9 @@ public class AIExample2_Inspect : MonoBehaviour
     {
         myField++;
     }
+
+    // You can hide variable only for some specific mode.
+    // You can right-click on a label and switch between mode.
+    [Inspect(InspectorLevel.Debug)]
+    public float showInDebug = 0;
 }

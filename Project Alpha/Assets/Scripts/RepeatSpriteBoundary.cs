@@ -12,10 +12,10 @@ public class RepeatSpriteBoundary : MonoBehaviour
 {
     SpriteRenderer sprite;
 
-    [Inspect]
-    void Start()
+    [Inspect(InspectorLevel.Advanced)]
+    void Generate()
     {
-        if (transform.GetChild(0) == null)
+        if (transform.childCount == 0)
         {
             // Get the current sprite with an unscaled size
             sprite = GetComponent<SpriteRenderer>();

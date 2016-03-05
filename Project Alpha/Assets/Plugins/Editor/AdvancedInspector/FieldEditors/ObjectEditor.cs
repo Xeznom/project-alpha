@@ -67,9 +67,6 @@ namespace AdvancedInspector
                 return;
             }
 
-            if (field.DisplayAsParent)
-                return;
-
             if (validator == null)
                 validator = typeof(EditorGUI).GetNestedType("ObjectFieldValidator", BindingFlags.NonPublic);
 

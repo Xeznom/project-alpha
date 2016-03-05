@@ -85,7 +85,6 @@ public class PlayerMovement : MonoBehaviour
             if(currentPoint == currentMovingPoint)
             {
                 dummyTargetPoint.position = currentMovingPoint.position;
-                PlayerAI.SearchPath();
             }
         }
     }
@@ -115,44 +114,40 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ListOfPoints.Count > 0)
         {
-            //dummyTargetPoint.position = ListOfPoints.Dequeue().position;
-        }
-        Debug.Log("Calling on target reach");
-    }
-
-    void Update()
-    {
-        if (currentMovingPoint != null)
-        {
-            if (Vector3.Distance(PlayerTransform.position, currentMovingPoint.position) < float.Epsilon + AgentThreshold)
+            if (currentPoint != currentMovingPoint)
             {
-                if (ListOfPoints.Count > 0)
+                if (currentMovingPoint.gameObject.activeSelf)
                 {
-                    if (currentPoint != currentMovingPoint)
-                    {
-                        LeanPool.Despawn(currentMovingPoint.gameObject);
-                        currentMovingPoint = ListOfPoints.Dequeue();
-                    }
+                    LeanPool.Despawn(currentMovingPoint.gameObject);
+                }
+                currentMovingPoint = ListOfPoints.Dequeue();
+            }
 
-                    if (currentMovingPoint == null)
-                        return;
-                    dummyTargetPoint.position = currentMovingPoint.position;
-                    PlayerAI.SearchPath();
-                }
-                else
+            if (currentMovingPoint == null)
+                return;
+            dummyTargetPoint.position = currentMovingPoint.position;
+            PlayerAI.SearchPath();
+        }
+        else
+        {
+            if (currentPoint != currentMovingPoint)
+            {
+                if (currentMovingPoint.gameObject.activeSelf)
                 {
-                    if (currentPoint != currentMovingPoint)
-                    {
-                        LeanPool.Despawn(currentMovingPoint.gameObject);
-                        currentMovingPoint = null;
-                    }
+                    LeanPool.Despawn(currentMovingPoint.gameObject);
                 }
+                currentMovingPoint = null;
             }
         }
     }
 
-    void OnPathComplete(Path p)
+    void OnTriggerEnter2D(Collider2D other)
     {
-
+        Debug.Log("On trigger enter");
+        if(other.CompareTag("Teacher"))
+        {
+            Debug.Log("Game OVER");
+            //LeanPool.Despawn(this.gameObject);
+        }
     }
 }
