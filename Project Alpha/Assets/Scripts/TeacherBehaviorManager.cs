@@ -13,10 +13,7 @@ public class TeacherBehaviorManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
-    }
-
-	// Use this for initialization
-	void Start () {
+        
         var allBehaviors = FindObjectsOfType(typeof(Behavior)) as Behavior[];
         for (int i = 0; i < allBehaviors.Length; ++i)
         {
@@ -27,20 +24,21 @@ public class TeacherBehaviorManager : MonoBehaviour {
             else
             { // 1 indicates flag taken behaviors
                 seekBehavior.Add(allBehaviors[i]);
-                allBehaviors[i].DisableBehavior();
+                allBehaviors[i].DisableBehavior(true);
             }
         }
-	}
+    }
     
     public void FoundPlayer()
     {
-        for(int i = 0; i < seekBehavior.Count; i++)
-        {
-            seekBehavior[i].EnableBehavior();
-        }
+
         for (int i = 0; i < seekBehavior.Count; i++)
         {
             patrolBehavior[i].DisableBehavior();
+        }
+        for(int i = 0; i < seekBehavior.Count; i++)
+        {
+            seekBehavior[i].EnableBehavior();
         }
     }
 }

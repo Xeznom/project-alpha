@@ -25,10 +25,6 @@ public class PlayerMovement : MonoBehaviour
     [AdvancedInspector.Inspect(InspectorLevel.Debug)]
     Transform currentMovingPoint;
 
-#if !WAYPOINT
-    Transform PlaceToMove;
-#endif
-
     // Use this for initialization
     void Start()
     {
@@ -93,28 +89,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 #else
-        Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
-        Vector3 WorldPos = new Vector3(fingerPos.x, fingerPos.y, 0);
 
-        var ray = finger.GetRay();
-        var hit = default(RaycastHit);
-
-        if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
-        {
-            if (hit.collider.CompareTag("Ground"))
-            {
-                if (PlaceToMove == null)
-                {
-                    GameObject obj = Lean.LeanPool.Spawn(PathPointPrefab, Vector3.zero, Quaternion.identity);
-                    PlaceToMove = obj.transform;
-                }
-            }
-            if (PlaceToMove != null)
-            {
-                PlaceToMove.transform.position = WorldPos;
-            }
-            dummyTargetPoint.position = PlaceToMove.position;
-        }
 #endif
     }
 
@@ -128,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             ListOfPoints.Enqueue(currentPoint);
             currentPoint = null;
 
-            if (currentMovingPoint == null)
+            //if (currentMovingPoint == null)
             {
                 currentMovingPoint = ListOfPoints.Dequeue();
             }
@@ -137,16 +112,16 @@ public class PlayerMovement : MonoBehaviour
                 dummyTargetPoint.position = currentMovingPoint.position;
                 PlayerAI.SearchPath();
             }
+
+
         }
 #else
-        dummyTargetPoint.position = PlaceToMove.position;
-        PlayerAI.SearchPath();
+
 #endif
     }
     
     void OnTargetReach()
     {
-#if WAYPOINT
         if (ListOfPoints.Count > 0)
         {
             if (currentPoint != currentMovingPoint)
@@ -174,9 +149,6 @@ public class PlayerMovement : MonoBehaviour
                 currentMovingPoint = null;
             }
         }
-#else
-        LeanPool.Despawn(PlaceToMove.gameObject);
-#endif
     }
 
     void OnTriggerEnter2D(Collider2D other)
