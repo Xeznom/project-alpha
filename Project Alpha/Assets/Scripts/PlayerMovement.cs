@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     [AdvancedInspector.Inspect(InspectorLevel.Debug)]
     Transform currentMovingPoint;
 
+#if !WAYPOINT
+    Transform notWaypointPoint;
+#endif
+
     // Use this for initialization
     void Start()
     {
@@ -89,7 +93,23 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 #else
+        Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
+        Vector3 WorldPos = new Vector3(fingerPos.x, fingerPos.y, 0);
+        var ray = finger.GetRay();
+        var hit = default(RaycastHit);
 
+        if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                if (notWaypointPoint == null)
+                {
+                    GameObject obj = Lean.LeanPool.Spawn(PathPointPrefab, Vector3.zero, Quaternion.identity);
+                    notWaypointPoint = obj.transform;
+                }
+                notWaypointPoint.position = WorldPos;
+            }
+        }
 #endif
     }
 
@@ -116,12 +136,14 @@ public class PlayerMovement : MonoBehaviour
 
         }
 #else
-
+        dummyTargetPoint.position = notWaypointPoint.position;
+        PlayerAI.SearchPath();
 #endif
     }
     
     void OnTargetReach()
     {
+#if WAYPOINT
         if (ListOfPoints.Count > 0)
         {
             if (currentPoint != currentMovingPoint)
@@ -149,6 +171,13 @@ public class PlayerMovement : MonoBehaviour
                 currentMovingPoint = null;
             }
         }
+#else
+        if (notWaypointPoint != null && notWaypointPoint.gameObject.activeSelf)
+        {
+            LeanPool.Despawn(notWaypointPoint.gameObject);
+            notWaypointPoint = null;
+        }
+#endif
     }
 
     void OnTriggerEnter2D(Collider2D other)
