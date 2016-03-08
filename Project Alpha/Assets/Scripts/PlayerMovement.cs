@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnFingerDown(LeanFinger finger)
     {
+#if WAYPOINT
         Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
         Vector3 WorldPos = new Vector3(fingerPos.x, fingerPos.y, 0);
 
@@ -87,10 +88,14 @@ public class PlayerMovement : MonoBehaviour
                 dummyTargetPoint.position = currentMovingPoint.position;
             }
         }
+#else
+
+#endif
     }
 
     void OnFingerUp(LeanFinger finger)
     {
+#if WAYPOINT
         if (currentPoint != null)
         {
             Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
@@ -98,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
             ListOfPoints.Enqueue(currentPoint);
             currentPoint = null;
 
-            if (currentMovingPoint == null)
+            //if (currentMovingPoint == null)
             {
                 currentMovingPoint = ListOfPoints.Dequeue();
             }
@@ -107,7 +112,12 @@ public class PlayerMovement : MonoBehaviour
                 dummyTargetPoint.position = currentMovingPoint.position;
                 PlayerAI.SearchPath();
             }
+
+
         }
+#else
+
+#endif
     }
     
     void OnTargetReach()

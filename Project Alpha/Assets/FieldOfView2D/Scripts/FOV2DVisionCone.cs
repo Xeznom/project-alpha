@@ -33,16 +33,25 @@ public class FOV2DVisionCone : MonoBehaviour
 		mesh = GetComponent<MeshFilter>().mesh;
 		meshRenderer = GetComponent<MeshRenderer>();
 		eyes = gameObject.GetComponent<FOV2DEyes>();
-		
 		meshRenderer.material = materials[0];
+    }
+
+    void OnEnable()
+    {
+        materials[0].color = Color.green;
     }
 	
 	void LateUpdate() 
 	{
 		UpdateMesh();
 		
-		UpdateMeshMaterial();
+		//UpdateMeshMaterial();
 	}
+
+    public void LerpToAlert(float percentage)
+    {
+        materials[0].color = Color.Lerp(Color.green, Color.red, percentage);
+    }
 	
 	void UpdateMesh()
 	{
