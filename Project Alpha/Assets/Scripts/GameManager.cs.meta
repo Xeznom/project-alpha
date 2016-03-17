@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 344488db3ebd9f4428dd14b000d02d42
+timeCreated: 1458115056
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - EndGameCanvas: {instanceID: 0}
+  - AGrade: {fileID: 21300012, guid: 5870ecaeab65a4944b9752aa123c1eef, type: 3}
+  - BGrade: {instanceID: 0}
+  - CGrade: {instanceID: 0}
+  - DGrade: {instanceID: 0}
+  - FGrade: {instanceID: 0}
+  - GameRunning: {instanceID: 0}
+  - Slide: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

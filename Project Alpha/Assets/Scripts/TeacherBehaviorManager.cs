@@ -10,6 +10,8 @@ public class TeacherBehaviorManager : MonoBehaviour {
     private List<Behavior> patrolBehavior = new List<Behavior>();
     private List<Behavior> seekBehavior = new List<Behavior>();
 
+    public AudioSource alarm;
+
     void Awake()
     {
         instance = this;
@@ -31,7 +33,7 @@ public class TeacherBehaviorManager : MonoBehaviour {
     
     public void FoundPlayer()
     {
-
+        alarm.Play();
         for (int i = 0; i < seekBehavior.Count; i++)
         {
             patrolBehavior[i].DisableBehavior();
@@ -40,5 +42,10 @@ public class TeacherBehaviorManager : MonoBehaviour {
         {
             seekBehavior[i].EnableBehavior();
         }
+    }
+
+    public void CaughtPlayer()
+    {
+        alarm.Stop();
     }
 }

@@ -17,7 +17,7 @@ public class TwoDPatrol : CustomAIPathMovementScript
     public SharedInt wayPointCounter = 0;
     
     public SharedGameObjectList waypoints;
-
+    public SharedBool Alerted;
     // The current index that we are heading towards within the waypoints array
     private int waypointIndex;
     private float waypointReachedTime;
@@ -51,6 +51,10 @@ public class TwoDPatrol : CustomAIPathMovementScript
     // Patrol around the different waypoints specified in the waypoint array. Always return a task status of running. 
     public override TaskStatus OnUpdate()
     {
+        if (Alerted.Value)
+        {
+            return TaskStatus.Failure;
+        }
         if (HasArrived())
         {
 

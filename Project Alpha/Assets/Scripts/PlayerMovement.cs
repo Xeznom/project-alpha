@@ -17,13 +17,23 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform dummyTargetPoint;
 
+    PlayerTriggerScript playerTriggers;
+
 
     CustomAILerp PlayerAI;
+
+    bool StartCopyingNotes;
+    bool StillCopyingNotes;
+
+#if WAYPOINT 
     Seeker PlayerSeeker;
     Transform PlayerTransform;
+    Transform currentMovingPoint;
+#endif
+
     Transform currentPoint;
     [AdvancedInspector.Inspect(InspectorLevel.Debug)]
-    Transform currentMovingPoint;
+
 
 #if !WAYPOINT
     Transform notWaypointPoint;
@@ -36,14 +46,18 @@ public class PlayerMovement : MonoBehaviour
         RegisteredPoints = new List<Transform>();
         ListOfPoints = new Queue<Transform>();
         PlayerAI = GetComponent<CustomAILerp>();
+        playerTriggers = GetComponent<PlayerTriggerScript>();
+#if WAYPOINT
         PlayerSeeker = GetComponent<Seeker>();
         PlayerTransform = transform;
+#endif
 
     }
 
     protected virtual void OnEnable()
     {
-        LeanTouch.OnFingerSet += OnFingerDown;
+        LeanTouch.OnFingerDown += OnFingerDown;
+        LeanTouch.OnFingerSet += OnFingerSet;
         LeanTouch.OnFingerUp += OnFingerUp;
         CustomAILerp.OnTargetReach += OnTargetReach;
 
@@ -51,16 +65,38 @@ public class PlayerMovement : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        LeanTouch.OnFingerSet -= OnFingerDown;
+        LeanTouch.OnFingerDown -= OnFingerDown;
+        LeanTouch.OnFingerSet -= OnFingerSet;
         LeanTouch.OnFingerUp -= OnFingerUp;
         CustomAILerp.OnTargetReach -= OnTargetReach;
 
         RegisteredPoints.Clear();
         ListOfPoints.Clear();
+#if WAYPOINT
         currentMovingPoint = null;
+#endif
     }
 
     void OnFingerDown(LeanFinger finger)
+    {
+        if(StartCopyingNotes)
+        {
+            Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
+
+            RaycastHit2D hit2d = Physics2D.Raycast(fingerPos, Vector2.zero);
+            if (hit2d == null || hit2d.collider == null || hit2d.collider.name != "Nerd")
+            {
+                StartCopyingNotes = false;
+            }
+            else
+            {
+                playerTriggers.CopyTestFunction(true);
+                StillCopyingNotes = true;
+            }
+        }
+    }
+
+    void OnFingerSet(LeanFinger finger)
     {
 #if WAYPOINT
         Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
@@ -93,22 +129,42 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 #else
-        Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
-        Vector3 WorldPos = new Vector3(fingerPos.x, fingerPos.y, 0);
-        var ray = finger.GetRay();
-        var hit = default(RaycastHit);
-
-        if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
+        if (!StartCopyingNotes)
         {
-            if (hit.collider.CompareTag("Ground"))
+            
+            Vector3 fingerPos = finger.GetWorldPosition(transform.position.z);
+            Vector3 WorldPos = new Vector3(fingerPos.x, fingerPos.y, 0);
+            var ray = finger.GetRay();
+            var hit = default(RaycastHit);
+
+            RaycastHit2D[] hits2D = Physics2D.RaycastAll(fingerPos, Vector2.zero);
+            for (int i = 0; i < hits2D.Length; i++)
             {
-                if (notWaypointPoint == null)
+                //Hacky method. Not changeable.
+                if (hits2D[i] != null && hits2D[i].collider != null && hits2D[i].collider.name == "Nerd" && playerTriggers.CopyTestFunction(true))
                 {
-                    GameObject obj = Lean.LeanPool.Spawn(PathPointPrefab, Vector3.zero, Quaternion.identity);
-                    notWaypointPoint = obj.transform;
+                    StartCopyingNotes = true;
+                    StillCopyingNotes = true;
+                    break;
                 }
-                notWaypointPoint.position = WorldPos;
             }
+
+            if (!StartCopyingNotes && Physics.Raycast(ray, out hit, float.PositiveInfinity))
+            {
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    if (notWaypointPoint == null)
+                    {
+                        GameObject obj = Lean.LeanPool.Spawn(PathPointPrefab, Vector3.zero, Quaternion.identity);
+                        notWaypointPoint = obj.transform;
+                    }
+                    notWaypointPoint.position = WorldPos;
+                }
+            }
+        }
+        else if (StillCopyingNotes)
+        {
+            playerTriggers.CopyTestFunction(true);
         }
 #endif
     }
@@ -136,8 +192,12 @@ public class PlayerMovement : MonoBehaviour
 
         }
 #else
-        dummyTargetPoint.position = notWaypointPoint.position;
-        PlayerAI.SearchPath();
+        if (notWaypointPoint != null)
+        {
+            dummyTargetPoint.position = notWaypointPoint.position;
+            PlayerAI.SearchPath();
+        }
+        StillCopyingNotes = false;
 #endif
     }
     
@@ -178,15 +238,5 @@ public class PlayerMovement : MonoBehaviour
             notWaypointPoint = null;
         }
 #endif
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("On trigger enter");
-        if(other.CompareTag("Teacher"))
-        {
-            Debug.Log("Game OVER");
-            //LeanPool.Despawn(this.gameObject);
-        }
     }
 }

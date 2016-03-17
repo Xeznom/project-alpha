@@ -22,6 +22,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
         [Tooltip("If target is null then use the target rotation")]
         public SharedVector3 targetRotation;
 
+
+
         public override TaskStatus OnUpdate()
         {
             var rotation = Target();
@@ -46,7 +48,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement
             }
             if (usePhysics2D) {
                 var angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
+                angle -= 90;
+                //var angle = Vector3.Angle(transform.up, position.normalized);
                 return Quaternion.AngleAxis(angle, Vector3.forward);
+
             }
             return Quaternion.LookRotation(position);
         }

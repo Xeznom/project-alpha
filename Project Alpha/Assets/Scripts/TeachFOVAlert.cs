@@ -2,19 +2,36 @@
 using System.Collections;
 using AdvancedInspector;
 using BehaviorDesigner.Runtime;
+using UnityEngine.UI;
 public class TeachFOVAlert : MonoBehaviour {
 
     FOV2DEyes eyes;
     FOV2DVisionCone visionCone;
     TeacherBehaviorManager manager;
-    float speed = -5;
     [AdvancedInspector.Inspect(AdvancedInspector.InspectorLevel.Debug)]
     [RangeValue(0, 1)]
     float SuspicionBarPercentage;
     [AdvancedInspector.Inspect(AdvancedInspector.InspectorLevel.Debug)]
     float TimeLeft = 2.0f;
+    [AdvancedInspector.Inspect(AdvancedInspector.InspectorLevel.Debug)]
+    bool Alerted;
 
     BehaviorDesigner.Runtime.Behavior PatrolState;
+    SharedBool alerted;
+
+    public Image CanvasWorldAlertBar;
+
+    public Image ExpresionImage;
+    public Sprite[] Expressions;
+
+    public AudioSource detect_sound;
+    public Transform TargetLookAt;
+
+    enum Expresions
+    {
+        Suspicios = 0,
+        Alerted = 1
+    }
 
     void Start()
     {
@@ -31,11 +48,16 @@ public class TeachFOVAlert : MonoBehaviour {
                 break;
             }
         }
+        alerted = (SharedBool)PatrolState.GetVariable("Alerted");
     }
 
     void OnEnable()
     {
+        ExpresionImage.sprite = null;
+        ExpresionImage.color = new Color(0f, 0f, 0f, 0f);
         SuspicionBarPercentage = 0;
+        CanvasWorldAlertBar.color = Color.green;
+        ExpresionImage.sprite = null;
     }
 
     void OnDisable()
@@ -43,25 +65,36 @@ public class TeachFOVAlert : MonoBehaviour {
 
     }
 
+    float totalSuspicion = 2.0f;
+
     void OnChangeFOVState(FOV2DVisionCone.Status newStatus)
     {
         switch (newStatus)
         {
             case FOV2DVisionCone.Status.Alert:
                 manager.FoundPlayer();
+                ExpresionImage.sprite = Expressions[(int)Expresions.Alerted];
+                ExpresionImage.color = Color.white;
+                this.enabled = false;
                 break;
             case FOV2DVisionCone.Status.Idle:
 
                 if (TimeLeft <= 0)
                 {
+                    alerted.Value = false;
+                    ExpresionImage.sprite = null;
+                    ExpresionImage.color = new Color(0f, 0f, 0f, 0f);
                     PatrolState.EnableBehavior();
                 }
                 break;
             case FOV2DVisionCone.Status.Suspicious:
-                PatrolState.DisableBehavior();
+                if(!detect_sound.isPlaying)
+                    detect_sound.Play();
                 SuspicionBarPercentage += 1f * Time.deltaTime;
-                visionCone.LerpToAlert(SuspicionBarPercentage);
-                if(SuspicionBarPercentage >= 2.0f)
+                float percentage = SuspicionBarPercentage / totalSuspicion;
+                AffectGraphicsComponent(percentage);
+
+                if (percentage >= 1.0f)
                 {
                     OnChangeFOVState(FOV2DVisionCone.Status.Alert);
                 }
@@ -73,6 +106,15 @@ public class TeachFOVAlert : MonoBehaviour {
         visionCone.status = newStatus;
     }
 
+    void AffectGraphicsComponent(float percentage)
+    {
+        visionCone.LerpToAlert(percentage);
+        CanvasWorldAlertBar.color = Color.Lerp(Color.green, Color.red, percentage);
+        CanvasWorldAlertBar.fillAmount = percentage;
+        ExpresionImage.sprite = Expressions[(int)Expresions.Suspicios];
+        ExpresionImage.color = Color.white;
+    }
+
     void Update()
     {
         bool playerDetect = false;
@@ -80,9 +122,14 @@ public class TeachFOVAlert : MonoBehaviour {
         {
             if(eyes.hits2D[i].transform && eyes.hits2D[i].transform.CompareTag("Player"))
             {
-                playerDetect = true;
-                TimeLeft = 2.0f;
-                OnChangeFOVState(FOV2DVisionCone.Status.Suspicious);
+                if (!eyes.hits2D[i].transform.GetComponent<PlayerTriggerScript>().OnChair)
+                {
+                    TargetLookAt.position = eyes.hits2D[i].transform.position;
+                    playerDetect = true;
+                    alerted.Value = true;
+                    TimeLeft = 2.0f;
+                    OnChangeFOVState(FOV2DVisionCone.Status.Suspicious);
+                }
                 break;
             }
             else
@@ -92,7 +139,19 @@ public class TeachFOVAlert : MonoBehaviour {
         }
         if(!playerDetect)
         {
-            TimeLeft -= Time.deltaTime;
+            detect_sound.Pause();
+            if (TimeLeft > 0)
+            {
+                TimeLeft -= Time.deltaTime;
+            }
         }
     }
+
+    void OnDrawGizmos()
+    {
+        Vector3 LookAt = transform.forward * 10;
+        Gizmos.DrawLine(transform.position, LookAt);
+    }
+
+    
 }

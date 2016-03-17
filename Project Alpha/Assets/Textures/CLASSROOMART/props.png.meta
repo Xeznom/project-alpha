@@ -1,0 +1,298 @@
+fileFormatVersion: 2
+guid: fe0dc53aedcf6a443949f16f54718275
+timeCreated: 1458184889
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: props_0
+    21300002: props_1
+    21300004: props_2
+    21300006: props_3
+    21300008: props_4
+    21300010: props_5
+    21300012: props_6
+    21300014: props_7
+    21300016: props_8
+    21300018: props_9
+    21300020: props_10
+    21300022: props_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1000
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: props_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 428
+        width: 440
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 210, y: 8.5}
+        - {x: 220, y: 25.5}
+        - {x: 220, y: 38.5}
+        - {x: -220, y: 38.5}
+        - {x: -220, y: 25.5}
+        - {x: -190, y: -26.5}
+        - {x: -186, y: -33.5}
+        - {x: -182, y: -38.5}
+        - {x: 179, y: -38.5}
+        - {x: 181, y: -37.5}
+        - {x: 193, y: -17.5}
+        - {x: 200, y: -6.5}
+    - name: props_1
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 469
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: props_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 276
+        width: 123
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -61.5, y: 60.5}
+        - {x: -61.5, y: -58.5}
+        - {x: -57.5, y: -60.5}
+        - {x: 58.5, y: -60.5}
+        - {x: 61.5, y: -52.5}
+        - {x: 61.5, y: 60.5}
+    - name: props_3
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 396
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22, y: 25}
+        - {x: -23, y: 25}
+        - {x: -25, y: 20}
+        - {x: -25, y: -11}
+        - {x: -17, y: -24}
+        - {x: -14, y: -25}
+        - {x: 21, y: -25}
+        - {x: 24, y: -22}
+        - {x: 25, y: -17}
+        - {x: 25, y: 23}
+    - name: props_4
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 305
+        width: 79
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 38.5, y: 45}
+        - {x: -36.5, y: 45}
+        - {x: -39.5, y: 39}
+        - {x: -39.5, y: -38}
+        - {x: -20.5, y: -45}
+        - {x: 28.5, y: -45}
+        - {x: 36.5, y: -14}
+        - {x: 39.5, y: 6}
+        - {x: 39.5, y: 41}
+    - name: props_5
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 316
+        width: 79
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39.5, y: 39}
+        - {x: -39.5, y: -20}
+        - {x: -32.5, y: -39}
+        - {x: 25.5, y: -39}
+        - {x: 39.5, y: -6}
+        - {x: 39.5, y: 39}
+    - name: props_6
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 291
+        width: 104
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -52, y: -6.5}
+        - {x: -46, y: -25.5}
+        - {x: -22, y: -41.5}
+        - {x: 49, y: -41.5}
+        - {x: 52, y: -39.5}
+        - {x: 52, y: -7.5}
+        - {x: 47, y: 26.5}
+        - {x: -15, y: 41.5}
+        - {x: -38, y: 41.5}
+        - {x: -52, y: 25.5}
+    - name: props_7
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 3
+        width: 92
+        height: 251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5, y: 121.5}
+        - {x: -31, y: 125.5}
+        - {x: -46, y: 125.5}
+        - {x: -46, y: -100.5}
+        - {x: 14, y: -125.5}
+        - {x: 46, y: -125.5}
+        - {x: 46, y: -7.5}
+        - {x: 44, y: 92.5}
+    - name: props_8
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 210
+        width: 50
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 32}
+        - {x: -25, y: 25}
+        - {x: -25, y: -15}
+        - {x: -23, y: -32}
+        - {x: 24, y: -32}
+        - {x: 25, y: -30}
+        - {x: 25, y: 15}
+        - {x: 14, y: 32}
+    - name: props_9
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 212
+        width: 49
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6.5, y: 30.5}
+        - {x: -24.5, y: 24.5}
+        - {x: -24.5, y: 7.5}
+        - {x: -15.5, y: -30.5}
+        - {x: 23.5, y: -30.5}
+        - {x: 24.5, y: -28.5}
+        - {x: 24.5, y: 10.5}
+        - {x: 13.5, y: 30.5}
+    - name: props_10
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 7
+        width: 94
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40, y: 107}
+        - {x: -47, y: 38}
+        - {x: -47, y: -95}
+        - {x: 13, y: -107}
+        - {x: 47, y: -107}
+        - {x: 47, y: 107}
+    - name: props_11
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 11
+        width: 247
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 90.5, y: -75.5}
+        - {x: 108.5, y: -75.5}
+        - {x: 116.5, y: -68.5}
+        - {x: 120.5, y: -63.5}
+        - {x: 123.5, y: -57.5}
+        - {x: 123.5, y: 75.5}
+        - {x: -123.5, y: 75.5}
+        - {x: -123.5, y: -62.5}
+        - {x: -118.5, y: -68.5}
+        - {x: -110.5, y: -75.5}
+        - {x: -94.5, y: -75.5}
+        - {x: -91.5, y: -72.5}
+        - {x: -91.5, y: -68.5}
+        - {x: 90.5, y: -68.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
